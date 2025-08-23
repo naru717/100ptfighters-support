@@ -1,14 +1,274 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>100pt Fighters サポートページ</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>100pt Fighters | サポート & お問い合わせ</title>
+
+  <!-- Meta / OGP -->
+  <meta name="description" content="100pt Fighters のサポートページ。不具合報告・お問い合わせ、よくある質問、プライバシーポリシーはこちら。" />
+  <meta property="og:title" content="100pt Fighters | サポート" />
+  <meta property="og:description" content="100pt Fighters のサポートページ。不具合報告・お問い合わせ、よくある質問、プライバシーポリシー。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://naru717.github.io/100ptfighters-support/og.png" />
+  <meta name="theme-color" content="#FF8AC9" />
+
+  <style>
+    :root{
+      --bg-grad-from:#fff7fb;
+      --bg-grad-to:#f5fbff;
+      --pink:#ff8ac9;
+      --pink-dark:#ff68b7;
+      --yellow:#ffd970;
+      --mint:#aaf0d1;
+      --sky:#bfe6ff;
+      --ink:#2a2a2a;
+      --muted:#6f6f6f;
+      --card:#ffffffcc;
+      --shadow: 0 8px 24px rgba(0,0,0,.12);
+      --radius: 18px;
+    }
+    *{box-sizing:border-box}
+    html,body{
+      margin:0; padding:0; color:var(--ink);
+      font-family:"Hiragino Maru Gothic ProN","SF Pro Rounded","Arial Rounded MT Bold",system-ui, -apple-system, sans-serif;
+      background:linear-gradient(180deg,var(--bg-grad-from),var(--bg-grad-to));
+    }
+
+    /* layout */
+    .container{max-width:1100px; margin:0 auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:30;
+      backdrop-filter:saturate(160%) blur(10px);
+      background:linear-gradient(90deg,#ff9ed2,#ff89c9);
+      color:#fff;
+      box-shadow:0 4px 20px rgba(255,104,183,.35);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 20px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900; letter-spacing:.4px}
+    .brand .logo{
+      width:34px; height:34px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0 35%, #ffd2e9 36% 100%);
+      box-shadow:0 4px 10px rgba(0,0,0,.15), inset 0 -2px 6px rgba(0,0,0,.12);
+      position:relative;
+    }
+    .brand .logo::after{
+      content:"⚔️"; position:absolute; inset:0; display:grid; place-items:center; font-size:18px;
+    }
+    .nav a.btn{
+      text-decoration:none; color:#fff; font-weight:700; background:#ff9bd0;
+      padding:10px 16px; border-radius:999px; box-shadow:var(--shadow);
+    }
+    .nav a.btn:hover{background:var(--pink-dark)}
+
+    /* hero */
+    .hero{
+      text-align:center; padding:56px 16px 30px;
+    }
+    .hero h1{
+      font-size:clamp(28px,4.6vw,44px);
+      margin:0 0 8px; color:#ff3c9a;
+      text-shadow:0 3px 0 #fff, 0 8px 22px rgba(255,60,154,.25);
+    }
+    .hero p{color:var(--muted); margin:0 auto 20px; max-width:720px; line-height:1.8}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:8px}
+    .chip{
+      padding:8px 12px; border-radius:999px; font-size:14px;
+      background:linear-gradient(180deg,#fff,#ffe9f4); border:1px solid #ffd2ea; box-shadow:var(--shadow)
+    }
+
+    /* sections */
+    section{padding:26px 0}
+    .card{
+      background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:22px; backdrop-filter:saturate(140%) blur(6px);
+    }
+    .grid{display:grid; gap:18px}
+    @media(min-width:860px){ .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
+    @media(min-width:860px){ .grid.cols-2{grid-template-columns:1.2fr 1fr} }
+
+    .feature{display:flex; gap:12px; align-items:flex-start}
+    .badge{
+      width:42px; height:42px; border-radius:14px; flex:none;
+      display:grid; place-items:center; font-size:22px; background:#fff; box-shadow:var(--shadow)
+    }
+    .feature h3{margin:.2em 0 .3em; font-size:18px}
+    .feature p{margin:0; color:var(--muted)}
+
+    /* FAQ */
+    details{
+      background:#fff; border-radius:14px; padding:14px 16px; box-shadow:var(--shadow);
+    }
+    details + details{margin-top:12px}
+    summary{cursor:pointer; font-weight:800; list-style:none}
+    summary::-webkit-details-marker{display:none}
+    details[open]{outline:2px solid #ffd2ea}
+
+    /* form embed */
+    .form-wrap iframe{
+      width:100%; height:740px; border:none; border-radius:16px; box-shadow:var(--shadow); background:#fff;
+    }
+
+    /* footer */
+    footer{margin-top:26px; padding:26px 0 50px; text-align:center; color:var(--muted)}
+    .links{display:flex; gap:12px; justify-content:center; flex-wrap:wrap}
+    .pill{
+      background:#fff; padding:8px 12px; border-radius:999px; text-decoration:none; color:var(--ink);
+      border:1px solid #eee; box-shadow:0 2px 8px rgba(0,0,0,.06);
+    }
+
+    /* small helper */
+    .sec-title{
+      font-size:22px; font-weight:900; margin:0 0 14px; display:flex; align-items:center; gap:8px;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>100pt Fighters サポートページ</h1>
-  <p>ようこそ！このページではアプリ「100pt Fighters」のサポート情報をお届けします。</p>
-  <h2>お問い合わせ</h2>
-  <p>不具合やご質問があれば、App Storeのレビューまたはお問い合わせフォームからお願いします。</p>
+  <!-- ====== Header ====== -->
+  <header>
+    <div class="nav container">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>100pt Fighters</span>
+      </div>
+      <nav class="links">
+        <a class="pill" href="#faq">❓ よくある質問</a>
+        <a class="pill" href="#privacy">🔒 プライバシー</a>
+        <a class="btn" href="#contact">📮 お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====== Hero ====== -->
+  <section class="hero container">
+    <h1>サポート & お問い合わせ</h1>
+    <p>
+      100pt Fighters を遊んでくれてありがとう！ご質問・不具合報告・ご要望はこのページからどうぞ。  
+      できるだけ早く返信できるよう、内容は具体的に書いていただけると助かります🙏
+    </p>
+    <div class="chips">
+      <div class="chip">🎮 シンプル×戦略バトル</div>
+      <div class="chip">🌟 かわいいスキン</div>
+      <div class="chip">🌐 オンライン対戦</div>
+      <div class="chip">🏆 トーナメント</div>
+    </div>
+  </section>
+
+  <!-- ====== Features ====== -->
+  <section class="container">
+    <div class="grid cols-3">
+      <div class="card feature">
+        <div class="badge" aria-hidden="true">⚙️</div>
+        <div>
+          <h3>不具合のご報告</h3>
+          <p>発生手順・端末名・OSバージョン・アプリのバージョンを書いていただけると再現しやすいです。</p>
+        </div>
+      </div>
+      <div class="card feature">
+        <div class="badge" aria-hidden="true">💡</div>
+        <div>
+          <h3>ご要望 / フィードバック</h3>
+          <p>「こんな機能がほしい」「ここをもっとかわいく！」など、気軽に送ってください。</p>
+        </div>
+      </div>
+      <div class="card feature">
+        <div class="badge" aria-hidden="true">🛡️</div>
+        <div>
+          <h3>安全への配慮</h3>
+          <p>個人情報の入力は最小限でOK。必要な範囲以外で情報を収集・共有することはありません。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== FAQ ====== -->
+  <section id="faq" class="container">
+    <h2 class="sec-title">❓ よくある質問</h2>
+    <div class="grid">
+      <details class="card">
+        <summary>購入したスキンが装備できません</summary>
+        <div style="margin-top:10px; color:var(--muted); line-height:1.8">
+          ショップで購入後に <b>スキン選択画面</b> から装備してください。反映されない場合はアプリの再起動、  
+          それでもダメな場合はお問い合わせフォームから「購入方法 / スキン名 / 購入時刻」をお知らせください。
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>課金（まめコイン）の復元はできますか？</summary>
+        <div style="margin-top:10px; color:var(--muted)">
+          まめコインは <b>消費型</b> のため、原則として復元機能はありません。端末変更前の引き継ぎにはご注意ください。
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>オンライン対戦でマッチしにくい</summary>
+        <div style="margin-top:10px; color:var(--muted)">
+          通信状態や時間帯によりマッチングに時間がかかることがあります。Wi-Fi推奨・バックグラウンドの通信を減らすと改善する場合があります。
+        </div>
+      </details>
+
+      <details class="card">
+        <summary>スクリーンショットがアップロードできない（開発者向け）</summary>
+        <div style="margin-top:10px; color:var(--muted)">
+          App Store Connect では 1290×2796 / 2796×1290 / 2868×1320 / 1320×2868px を推奨。  
+          Macの「プレビュー」で <b>サイズ調整→ピクセルを指定</b>、縦横比固定・再サンプルONで合わせてください。
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ====== Privacy ====== -->
+  <section id="privacy" class="container">
+    <h2 class="sec-title">🔒 プライバシー</h2>
+    <div class="card">
+      <p style="margin:0; line-height:1.9; color:var(--muted)">
+        本アプリは、プレイデータや端末内の個人情報を外部に送信しません。  
+        お問い合わせフォームではご連絡に必要な最小限の情報のみをお預かりし、サポート目的以外で利用しません。  
+        要請に応じて速やかに削除いたします。
+      </p>
+    </div>
+  </section>
+
+  <!-- ====== Contact (Google Form) ====== -->
+  <section id="contact" class="container">
+    <h2 class="sec-title">📮 お問い合わせ</h2>
+    <div class="card form-wrap">
+      <!-- ★ あなたのフォームを埋め込み ★ -->
+      <iframe
+        title="100pt Fighters お問い合わせフォーム"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSeJVahgeDf8dIaJFEEH8w2ZCM4H_mgCAjnRf1L-LCMN12Y46g/viewform?embedded=true"
+        loading="lazy">
+        読み込んでいます…
+      </iframe>
+      <p style="text-align:center; color:var(--muted); margin:12px 0 0">
+        返信が必要な場合はメールアドレス欄をご記入ください（任意）。  
+        いただいた内容は改善の参考にさせていただきます🌱
+      </p>
+    </div>
+  </section>
+
+  <!-- ====== Footer ====== -->
+  <footer class="container">
+    <div class="links" style="margin-bottom:10px">
+      <a class="pill" href="#top">⬆️ ページ上部へ</a>
+      <a class="pill" href="#faq">❓ FAQ</a>
+      <a class="pill" href="#privacy">🔒 プライバシー</a>
+      <a class="pill" href="#contact">📮 お問い合わせ</a>
+    </div>
+    <small>© 2025 100pt Fighters</small>
+  </footer>
+
+  <!-- 小さなスムーススクロール -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id=a.getAttribute('href').slice(1);
+        const el=document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}) }
+      });
+    });
+  </script>
 </body>
 </html>
+
